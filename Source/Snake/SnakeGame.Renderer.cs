@@ -1,4 +1,5 @@
-﻿using Meadow.Foundation.Graphics;
+﻿using Meadow.Foundation;
+using Meadow.Foundation.Graphics;
 using System;
 using System.Threading;
 
@@ -8,8 +9,8 @@ namespace Snake
     {
         MicroGraphics graphics;
 
-        int topOffset = 8; //pixels
-        int pixelScale = 1;
+        int topOffset;
+        int pixelScale;
 
         public void Init(MicroGraphics gl)
         {
@@ -17,7 +18,7 @@ namespace Snake
 
             gl.CurrentFont = new Font8x12();
             topOffset = 12; //pixels
-            pixelScale = 4;
+            pixelScale = 5;
 
             gl.Clear();
             gl.DrawText(0, 0, "Meadow Snake");
@@ -48,7 +49,7 @@ namespace Snake
             //draw food
             graphics.DrawRectangle(FoodPosition.X * pixelScale + 1,
                 FoodPosition.Y * pixelScale + topOffset + 1,
-                pixelScale, pixelScale);
+                pixelScale, pixelScale, Color.Red);
 
             //draw snake
             for (int i = 0; i < SnakePosition.Count; i++)
@@ -57,7 +58,7 @@ namespace Snake
 
                 graphics.DrawRectangle(point.X * pixelScale + 1,
                     point.Y * pixelScale + topOffset + 1,
-                    pixelScale, pixelScale, true, true);
+                    pixelScale, pixelScale, Color.HotPink, true);
             }
 
             //  if (PlaySound)

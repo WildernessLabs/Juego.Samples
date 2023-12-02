@@ -115,8 +115,8 @@ namespace Snake
             int foodX, foodY;
             do
             {
-                foodX = rand.Next() % BoardWidth;
-                foodY = rand.Next() % BoardHeight;
+                foodX = rand.Next() % BoardWidth - 1;
+                foodY = rand.Next() % BoardHeight - 1;
             }
             while (IsCellEmpty(foodX, foodY) == false);
 
