@@ -1,4 +1,5 @@
-﻿using Meadow.Foundation.Audio;
+﻿using Meadow.Foundation;
+using Meadow.Foundation.Audio;
 using Meadow.Foundation.Graphics;
 
 namespace Span4
@@ -8,7 +9,7 @@ namespace Span4
         int cellSize;
         int chipRadius;
         int yStart;
-        int xStart = 0;
+        int xStart;
 
         int boardWidth;
         int boardHeight;
@@ -23,11 +24,12 @@ namespace Span4
             this.effectsAudio = effectsAudio;
             graphics = gl;
 
-            yStart = 20;
-            cellSize = 18;
-            chipRadius = 7;
-            boardWidth = 128;
-            boardHeight = 110;
+            xStart = 2;
+            yStart = 32;
+            cellSize = 25;
+            chipRadius = 11;
+            boardWidth = cellSize * 7 + 2;
+            boardHeight = cellSize * 6 + 2;
 
             gl.CurrentFont = new Font12x16();
 
@@ -40,13 +42,13 @@ namespace Span4
         void DrawGame(MicroGraphics graphics)
         {
             //draw gameboard
-            graphics.DrawRectangle(0, yStart, boardWidth, boardHeight, true, false);
+            graphics.DrawRectangle(xStart, yStart, boardWidth, boardHeight, true, false);
 
             for (int i = 1; i < 7; i++)
             {
-                graphics.DrawLine(cellSize * i,
+                graphics.DrawLine(xStart + cellSize * i,
                     yStart,
-                    cellSize * i,
+                    xStart + cellSize * i,
                     yStart + cellSize * 6 + 1,
                     true);
             }
@@ -90,7 +92,7 @@ namespace Span4
             }
 
             //Draw side display
-            int xText = boardWidth + 11;
+            int xText = 200;
             int yText = 0;
             graphics.DrawText(xText, yText, "Span4!");
             yText += graphics.CurrentFont.Height * 2;
@@ -116,16 +118,16 @@ namespace Span4
                 graphics);
         }
 
-        void DrawChipOnBoard(int column, int row, bool isFilled, MicroGraphics graphics)
+        void DrawChipOnBoard(int column, int row, bool isPlayerOne, MicroGraphics graphics)
         {
             DrawChip(xStart + column * cellSize + (cellSize + 1) / 2,
                 yStart + (Height - row - 1) * cellSize + (cellSize + 1) / 2,
-                isFilled, graphics);
+                isPlayerOne, graphics);
         }
-        void DrawChip(int xCenter, int yCenter, bool isFilled, MicroGraphics graphics)
+        void DrawChip(int xCenter, int yCenter, bool isPlayerOne, MicroGraphics graphics)
         {
             graphics.DrawCircle(xCenter, yCenter, chipRadius,
-                            true, isFilled, true);
+                            isPlayerOne ? Color.Cyan : Color.Red, true, false);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Meadow;
 using Meadow.Devices;
+using Meadow.Foundation;
 using Meadow.Foundation.Audio;
 using Meadow.Foundation.Graphics;
 using System;
@@ -37,6 +38,12 @@ namespace Span4
             juego.Left_RightButton.Clicked += (s, e) => game.Right();
             juego.Left_DownButton.Clicked += (s, e) => game.Down();
 
+            juego.Right_LeftButton.Clicked += (s, e) => game.Left();
+            juego.Right_RightButton.Clicked += (s, e) => game.Right();
+            juego.Right_DownButton.Clicked += (s, e) => game.Down();
+
+            juego.StartButton.Clicked += (s, e) => game.Reset();
+
             graphics = new MicroGraphics(juego.Display)
             {
                 CurrentFont = new Font12x16(),
@@ -44,8 +51,6 @@ namespace Span4
 
             moveAudio = new MicroAudio(juego.LeftSpeaker);
             effectsAudio = new MicroAudio(juego.RightSpeaker);
-
-
 
             game.Init(graphics, moveAudio, effectsAudio);
 
@@ -110,8 +115,8 @@ namespace Span4
         void DrawplashScreen()
         {
             graphics.Clear();
-            //  graphics.DrawText(160, 70, "Froggit", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-            //  graphics.DrawText(160, 140, "Press Start", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
+            graphics.DrawText(160, 70, "Connect4", Color.Cyan, ScaleFactor.X3, HorizontalAlignment.Center);
+            graphics.DrawText(160, 140, "Press Start", Color.Violet, ScaleFactor.X1, HorizontalAlignment.Center);
             graphics.Show();
         }
 
