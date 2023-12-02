@@ -8,7 +8,7 @@ namespace Froggit
     {
         public static Color FrogColor = new Color(57, 255, 20);
         public static Color TruckColor = Color.FromHex("#93AF9E");
-        public static Color LogColor = Color.FromHex("#8b6914"); //#404A3C");
+        public static Color LogColor = Color.FromHex("#8b6914");
         public static Color CarColor = Color.FromHex("#00E6FF");
         public static Color WaterColor = Color.FromHex("#00E6FF");
         public static Color SidewalkColor = Color.FromHex("#404A3C");
@@ -21,8 +21,6 @@ namespace Froggit
 
         void InitBuffers()
         {
-            //could really reduce some buffer churn here .....
-
             byte[] frogU = { 0x99, 0xbd, 0x5a, 0x7e, 0x7e, 0x3c, 0x66, 0xc3 };
             byte[] frogL = { 0xe3, 0x3a, 0x5e, 0xfc, 0xfc, 0x5e, 0x3a, 0xe3 };
             byte[] frogR = { 0xc7, 0x5c, 0x7a, 0x3f, 0x3f, 0x7a, 0x5c, 0xc7 };
@@ -30,10 +28,6 @@ namespace Froggit
             frogUp = LoadSprite(frogU, color: FrogColor);
             frogLeft = LoadSprite(frogL, color: FrogColor);
             frogRight = LoadSprite(frogR, color: FrogColor);
-
-            // byte[] logL = { 0xc0, 0x99, 0x00, 0x30, 0x09, 0x20, 0x9c, 0xc0 }; //log left
-            // byte[] logC = { 0x00, 0xc9, 0x00, 0x1a, 0xc1, 0x00, 0xd7, 0x00 };
-            //  byte[] logR = { 0x03, 0xdd, 0x22, 0x2a, 0xaa, 0x22, 0x5d, 0x03 };
 
             byte[] logDarkL = { 0x3f, 0x66, 0xff, 0xcf, 0xf6, 0xdf, 0x63, 0x3f }; //log left
             byte[] logDarkC = { 0xff, 0x36, 0xff, 0xe5, 0x3e, 0xff, 0x28, 0xff };
@@ -68,11 +62,6 @@ namespace Froggit
 
         IPixelBuffer LoadSprite(byte[] data, Color color, int width = 8, int height = 8)
         {
-            //   var buf = new Buffer1bppColor(width * 2, height * 2);
-            //   buf.Fill(color);
-            //   buf.ColorOn = color;
-            //   return buf.ConvertPixelBuffer<BufferRgb565>();
-
             var buf = new Buffer1bppColor(width, height, data)
                .RotateAndConvert<Buffer1bppColor>(RotationType._90Degrees)
                .ScaleUp<Buffer1bppColor>(2);

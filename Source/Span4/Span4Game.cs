@@ -92,6 +92,10 @@
             }
 
             lastInput = UserInput.None;
+
+            graphics.Clear();
+            DrawGame(graphics);
+            graphics.Show();
         }
 
         void UpdateGameState()
@@ -218,34 +222,38 @@
         public void Up()
         {
             Reset();
+            Update();
         }
 
         public void Down()
         {
             lastInput = UserInput.Down;
+            Update();
         }
 
         public void Left()
         {
             lastInput = UserInput.Left;
+            Update();
         }
 
         public void Right()
         {
             lastInput = UserInput.Right;
+            Update();
         }
 
-        public void MoveLeft()
+        void MoveLeft()
         {
             if (CurrentColumn > 0) { CurrentColumn--; }
         }
 
-        public void MoveRight()
+        void MoveRight()
         {
             if (CurrentColumn < Width - 1) { CurrentColumn++; }
         }
 
-        public void Drop()
+        void Drop()
         {
             AddChip(CurrentColumn);
         }

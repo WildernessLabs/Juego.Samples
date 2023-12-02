@@ -42,6 +42,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eyeball.Core", "Eyeball\Eye
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Eyeball.Juego", "Eyeball\Eyeball.Juego\Eyeball.Juego.csproj", "{AE06F7ED-D4B7-4766-8F9C-8D7BFD100EF8}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Span4", "Span4\Span4.csproj", "{E8917F68-C0F0-4037-BACF-9221AEA8F297}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug_v1_ProjLab|Any CPU = Debug_v1_ProjLab|Any CPU
@@ -352,6 +354,24 @@ Global
 		{AE06F7ED-D4B7-4766-8F9C-8D7BFD100EF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE06F7ED-D4B7-4766-8F9C-8D7BFD100EF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AE06F7ED-D4B7-4766-8F9C-8D7BFD100EF8}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v1_ProjLab|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v1_ProjLab|Any CPU.Build.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v1_ProjLab|Any CPU.Deploy.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v2_ProjLab|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v2_ProjLab|Any CPU.Build.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug_v2_ProjLab|Any CPU.Deploy.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v1_ProjLab|Any CPU.ActiveCfg = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v1_ProjLab|Any CPU.Build.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v1_ProjLab|Any CPU.Deploy.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v2_ProjLab|Any CPU.ActiveCfg = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v2_ProjLab|Any CPU.Build.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release_v2_ProjLab|Any CPU.Deploy.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E8917F68-C0F0-4037-BACF-9221AEA8F297}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

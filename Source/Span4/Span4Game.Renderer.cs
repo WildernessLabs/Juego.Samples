@@ -1,4 +1,5 @@
-﻿using Meadow.Foundation.Graphics;
+﻿using Meadow.Foundation.Audio;
+using Meadow.Foundation.Graphics;
 
 namespace Span4
 {
@@ -12,42 +13,27 @@ namespace Span4
         int boardWidth;
         int boardHeight;
 
-        public void Init(MicroGraphics gl)
+        MicroAudio moveAudio;
+        MicroAudio effectsAudio;
+        MicroGraphics graphics;
+
+        public void Init(MicroGraphics gl, MicroAudio moveAudio, MicroAudio effectsAudio)
         {
-            if (gl.Width == 240)
-            {
-                yStart = 20;
-                cellSize = 18;
-                chipRadius = 7;
-                boardWidth = 128;
-                boardHeight = 110;
+            this.moveAudio = moveAudio;
+            this.effectsAudio = effectsAudio;
+            graphics = gl;
 
-                gl.CurrentFont = new Font12x16();
-            }
-            else
-            {
-                yStart = 9;
-                cellSize = 9;
-                chipRadius = 3;
-                boardWidth = 64;
-                boardHeight = 55;
+            yStart = 20;
+            cellSize = 18;
+            chipRadius = 7;
+            boardWidth = 128;
+            boardHeight = 110;
 
-                gl.CurrentFont = new Font4x8();
-            }
+            gl.CurrentFont = new Font12x16();
 
             gl.Clear();
             gl.DrawText(0, 0, "Meadow Span4");
             gl.DrawText(0, 16, "v0.2.0");
-            gl.Show();
-        }
-
-        public void Update(IIOConfig ioConfig)
-        {
-            var gl = ioConfig.Graphics;
-
-            gl.Clear(false);
-            Update();
-            DrawGame(gl);
             gl.Show();
         }
 

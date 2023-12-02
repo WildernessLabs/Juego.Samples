@@ -3,7 +3,6 @@ using Meadow.Devices;
 using Meadow.Foundation.Audio;
 using Meadow.Foundation.Graphics;
 using System;
-using System.Threading;
 using System.Threading.Tasks;
 using WildernessLabs.Hardware.Juego;
 
@@ -31,8 +30,12 @@ namespace Span4
         {
             Console.WriteLine("Initialize...");
 
+            game = new Span4Game();
+
             juego = Juego.Create();
-            juego.StartButton.Clicked += StartButton_Clicked;
+            juego.Left_LeftButton.Clicked += (s, e) => game.Left();
+            juego.Left_RightButton.Clicked += (s, e) => game.Right();
+            juego.Left_DownButton.Clicked += (s, e) => game.Down();
 
             graphics = new MicroGraphics(juego.Display)
             {
@@ -42,7 +45,7 @@ namespace Span4
             moveAudio = new MicroAudio(juego.LeftSpeaker);
             effectsAudio = new MicroAudio(juego.RightSpeaker);
 
-            game = new Span4Game();
+
 
             game.Init(graphics, moveAudio, effectsAudio);
 
@@ -69,7 +72,7 @@ namespace Span4
             if (GameState.Ready == gameState)
             {
                 gameState = GameState.Playing;
-                _ = PlayGame();
+                PlayGame();
             }
             else if (GameState.GameOver == gameState)
             {
@@ -98,22 +101,23 @@ namespace Span4
             }
             else if (juego.SelectButton.State == true)
             {
-                game.Quit();
+                //    game.Quit();
             }
 
-            game.Update();
+            //   game.Update();
         }
 
         void DrawplashScreen()
         {
             graphics.Clear();
-            graphics.DrawText(160, 70, "Froggit", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-            graphics.DrawText(160, 140, "Press Start", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
+            //  graphics.DrawText(160, 70, "Froggit", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
+            //  graphics.DrawText(160, 140, "Press Start", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
             graphics.Show();
         }
 
         void DrawEndScreen()
         {
+            /*
             graphics.Clear();
 
             if (game.Winner)
@@ -128,25 +132,12 @@ namespace Span4
             }
 
             graphics.Show();
+            */
         }
 
-        Task PlayGame()
+        void PlayGame()
         {
-            var t = new Task(() =>
-            {
-                game.Reset();
-                while (game.IsPlaying)
-                {
-                    UpdateGame();
-                    Thread.Sleep(0);
-                }
-                gameState = GameState.GameOver;
-                DrawEndScreen();
-            }, TaskCreationOptions.LongRunning);
-
-            t.Start();
-
-            return t;
+            game.Reset();
         }
     }
 }
