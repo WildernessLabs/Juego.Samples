@@ -19,36 +19,36 @@ Before running any of the project samples below, make sure to go through the [Me
     </tr>
         <tr>
         <td>
-            <img src="Design/wildernesslabs-meadow-cloud-begginer.jpg" alt="iot, dotnet, meadow, led, dice, buttons"/><br/>
-            Send an over-the-air update to change colors on an RGB LED</br>
-            <a href="Source/RgbLedUpdateSample/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-getting-started.jpg" alt="juego, dotnet, meadow, dice, buttons"/><br/>
+            Getting startd with Juego with and basic sample</br>
+            <a href="Source/">Source Code</a>
         </td>
         <td>
-            <img src="Design/wildernesslabs-meadow-cloud-log.jpg" alt="iot, dotnet, meadow, game, memory"/><br/>
-            Send diagnostics logs from Meadow to Meadow.Cloud</br>
-            <a href="Source/CloudLogging/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-froggit.jpg" alt="dotnet, meadow, juego, graphics, 2D, frogger"/><br/>
+            Run/play frogger on a Juego board</br>
+            <a href="Source/Froggit/">Source Code</a>
         </td>
         <td>
-            <img src="Design/wildernesslabs-meadow-health-metrics.jpg" alt="iot, dotnet, meadow, morse-code, graphics"/><br/>
-            Check your Meadow's Health Metrics on Meadow.Cloud</br>
-            <a href="Source/HealthMetricsMonitoring/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-snake.jpg" alt="dotnet, meadow, juego, graphics, 2D, snake"/><br/>
+            Run/play snake on a Juego board</br>
+            <a href="Source/Snake/">Source Code</a>
         </td>
     </tr>
     <tr>
         <td>
-            <a href="Source/Meadow.Cloud_Logging/"><img src="Design/wildernesslabs-projectlab-meadow-cloud-logging.jpg"/></a><br/>
-            Send environmental data to Meadow.Cloud using Log Event</br>
-            <a href="Source/Meadow.Cloud_Logging/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-span-four.jpg" alt="dotnet, meadow, juego, graphics, 2D, span 4"/><br/>
+            Run/play Span4 on a Juego board</br>
+            <a href="Source/Span4/">Source Code</a>
         </td>
         <td>
-            <a href="Source/Meadow.Cloud_Client/"><img src="Design/wildernesslabs-projectlab-meadow-cloud-client.png"/></a><br/>
-            Get log event data from Meadow.Cloud using its client API<br/>
-            <a href="Source/Meadow.Cloud_Client/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-tetraminos.jpg\"/><br/>
+            Run/play Tetraminoes on a Juego board<br/>
+            <a href="Source/Tetraminoes/">Source Code</a>
         </td>
         <td>
-            <a href="Source/Meadow.Cloud_Command/"><img src="Design/wildernesslabs-projectlab-meadow-cloud-relay-command.png"/></a><br/>
-            Use Meadow.Cloud commands to control a four channel relay</br>
-            <a href="Source/Meadow.Cloud_Command/">Source Code</a>
+            <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg"/><br/>
+            Run/play snake on a Juego board</br>
+            <a href="Source/Eyeball/">Source Code</a>
         </td> 
     </tr>
     <tr>
