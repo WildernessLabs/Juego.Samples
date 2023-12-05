@@ -28,7 +28,7 @@ Before running any of the Juego samples below, make sure your board is running t
             <a href="Source/Froggit/">Source Code</a>
         </td>
         <td>
-            <img src="Design/wildernesslabs-meadow-juego-tetraminos.jpg\"/><br/>
+            <img src="Design/wildernesslabs-meadow-juego-tetraminos.jpg" alt="dotnet, meadow, juego, graphics, 2D, tetris"/><br/>
             Run/play Tetraminoes on a Juego<br/>
             <a href="Source/Tetraminoes/">Source Code</a>
         </td>
@@ -40,14 +40,14 @@ Before running any of the Juego samples below, make sure your board is running t
             <a href="Source/Span4/">Source Code</a>
         </td>
         <td>
-            <img src="Design/wildernesslabs-meadow-juego-snake.jpg" alt="dotnet, meadow, juego, graphics, 2D, snake"/><br/>
+            <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg" alt="dotnet, meadow, juego, graphics, 2D, eyeball"/><br/>
             Halloween Eye Ball animation</br>
-            <a href="Source/Snake/">Source Code</a>
+            <a href="Source/Eyeball/">Source Code</a>
         </td>
         <td>
-            <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg"/><br/>
+            <img src="Design/wildernesslabs-meadow-juego-snake.jpg" alt="dotnet, meadow, juego, graphics, 2D, snake"/><br/>
             Run/play snake on a Juego</br>
-            <a href="Source/Eyeball/">Source Code</a>
+            <a href="Source/Snake/">Source Code</a>
         </td> 
     </tr>
     <tr>
