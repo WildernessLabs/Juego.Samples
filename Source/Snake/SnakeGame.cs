@@ -1,168 +1,167 @@
 ﻿using System;
 using System.Collections;
 
-namespace Snake
+namespace Snake;
+
+public class Point
 {
-    public class Point
+    public int X { get; set; }
+    public int Y { get; set; }
+
+    public Point(int x, int y)
     {
-        public int X { get; set; }
-        public int Y { get; set; }
-
-        public Point(int x, int y)
-        {
-            X = x;
-            Y = y;
-        }
-
-        public Point(Point point)
-        {
-            X = point.X;
-            Y = point.Y;
-        }
+        X = x;
+        Y = y;
     }
 
-    public enum SnakeDirection : byte
+    public Point(Point point)
     {
-        Up,
-        Down,
-        Left,
-        Right,
-        Stop, //to start
+        X = point.X;
+        Y = point.Y;
+    }
+}
+
+public enum SnakeDirection : byte
+{
+    Up,
+    Down,
+    Left,
+    Right,
+    Stop, //to start
+}
+
+public partial class SnakeGame
+{
+    public int Score { get; private set; }
+    public int Level { get; private set; }
+
+    public int BoardWidth { get; private set; }
+    public int BoardHeight { get; private set; }
+
+    public ArrayList SnakePosition { get; private set; }
+
+    public Point FoodPosition { get; private set; }
+
+    public SnakeDirection Direction { get; private set; }
+
+    public bool PlaySound { get; private set; }
+
+    Random rand = new Random();
+
+    enum CellType : byte
+    {
+        Empty,
+        Food,
     }
 
-    public partial class SnakeGame
+    public SnakeGame()
     {
-        public int Score { get; private set; }
-        public int Level { get; private set; }
+    }
 
-        public int BoardWidth { get; private set; }
-        public int BoardHeight { get; private set; }
+    void UpdateGameState()
+    {
+        Score++;
+        PlaySound = false;
 
-        public ArrayList SnakePosition { get; private set; }
+        if (Direction == SnakeDirection.Stop)
+            return;
 
-        public Point FoodPosition { get; private set; }
+        var head = new Point((Point)SnakePosition[0]);
+        var tail = new Point((Point)SnakePosition[SnakePosition.Count - 1]);
 
-        public SnakeDirection Direction { get; private set; }
+        if (Direction == SnakeDirection.Left)
+        { head.X--; }
+        if (Direction == SnakeDirection.Right)
+        { head.X++; }
+        if (Direction == SnakeDirection.Up)
+        { head.Y--; }
+        if (Direction == SnakeDirection.Down)
+        { head.Y++; }
 
-        public bool PlaySound { get; private set; }
-
-        Random rand = new Random();
-
-        enum CellType : byte
+        for (int i = 0; i < SnakePosition.Count - 1; i++)
         {
-            Empty,
-            Food,
+            SnakePosition[SnakePosition.Count - 1 - i] = new Point((Point)SnakePosition[SnakePosition.Count - 2 - i]);
         }
 
-        public SnakeGame()
+        SnakePosition[0] = head;
+
+        if (IsCellEmpty(head.X, head.Y, true) == false)
         {
+            Reset();
         }
 
-        void UpdateGameState()
+        if (head.X == FoodPosition.X && head.Y == FoodPosition.Y)
         {
-            Score++;
-            PlaySound = false;
-
-            if (Direction == SnakeDirection.Stop)
-                return;
-
-            var head = new Point((Point)SnakePosition[0]);
-            var tail = new Point((Point)SnakePosition[SnakePosition.Count - 1]);
-
-            if (Direction == SnakeDirection.Left)
-            { head.X--; }
-            if (Direction == SnakeDirection.Right)
-            { head.X++; }
-            if (Direction == SnakeDirection.Up)
-            { head.Y--; }
-            if (Direction == SnakeDirection.Down)
-            { head.Y++; }
-
-            for (int i = 0; i < SnakePosition.Count - 1; i++)
-            {
-                SnakePosition[SnakePosition.Count - 1 - i] = new Point((Point)SnakePosition[SnakePosition.Count - 2 - i]);
-            }
-
-            SnakePosition[0] = head;
-
-            if (IsCellEmpty(head.X, head.Y, true) == false)
-            {
-                Reset();
-            }
-
-            if (head.X == FoodPosition.X && head.Y == FoodPosition.Y)
-            {
-                SnakePosition.Add(tail);
-                UpdateFood();
-                PlaySound = true;
-            }
-        }
-
-        public void Reset()
-        {
-            SnakePosition = new ArrayList();
-            SnakePosition.Add(new Point(BoardWidth / 2, BoardHeight / 2));
-            Direction = SnakeDirection.Stop;
-
-            Level = 0;
-            Score = 0;
-
+            SnakePosition.Add(tail);
             UpdateFood();
+            PlaySound = true;
         }
+    }
 
-        void UpdateFood()
+    public void Reset()
+    {
+        SnakePosition = new ArrayList();
+        SnakePosition.Add(new Point(BoardWidth / 2, BoardHeight / 2));
+        Direction = SnakeDirection.Stop;
+
+        Level = 0;
+        Score = 0;
+
+        UpdateFood();
+    }
+
+    void UpdateFood()
+    {
+        int foodX, foodY;
+        do
         {
-            int foodX, foodY;
-            do
+            foodX = rand.Next() % BoardWidth - 1;
+            foodY = rand.Next() % BoardHeight - 1;
+        }
+        while (IsCellEmpty(foodX, foodY) == false);
+
+        FoodPosition = new Point(foodX, foodY);
+        Level++;
+    }
+
+    bool IsCellEmpty(int x, int y, bool ignoreHead = false)
+    {
+        Point snakeBody;
+
+        if (x < 0 ||
+            y < 0 ||
+            x >= BoardWidth ||
+            y >= BoardHeight)
+            return false;
+
+        for (int i = ignoreHead ? 1 : 0; i < SnakePosition.Count; i++)
+        {
+            snakeBody = (Point)SnakePosition[i];
+            if (snakeBody.X == x && snakeBody.Y == y)
             {
-                foodX = rand.Next() % BoardWidth - 1;
-                foodY = rand.Next() % BoardHeight - 1;
-            }
-            while (IsCellEmpty(foodX, foodY) == false);
-
-            FoodPosition = new Point(foodX, foodY);
-            Level++;
-        }
-
-        bool IsCellEmpty(int x, int y, bool ignoreHead = false)
-        {
-            Point snakeBody;
-
-            if (x < 0 ||
-                y < 0 ||
-                x >= BoardWidth ||
-                y >= BoardHeight)
                 return false;
-
-            for (int i = ignoreHead ? 1 : 0; i < SnakePosition.Count; i++)
-            {
-                snakeBody = (Point)SnakePosition[i];
-                if (snakeBody.X == x && snakeBody.Y == y)
-                {
-                    return false;
-                }
             }
-            return true;
         }
+        return true;
+    }
 
-        public void Left()
-        {
-            Direction = SnakeDirection.Left;
-        }
+    public void Left()
+    {
+        Direction = SnakeDirection.Left;
+    }
 
-        public void Right()
-        {
-            Direction = SnakeDirection.Right;
-        }
+    public void Right()
+    {
+        Direction = SnakeDirection.Right;
+    }
 
-        public void Up()
-        {
-            Direction = SnakeDirection.Up;
-        }
+    public void Up()
+    {
+        Direction = SnakeDirection.Up;
+    }
 
-        public void Down()
-        {
-            Direction = SnakeDirection.Down;
-        }
+    public void Down()
+    {
+        Direction = SnakeDirection.Down;
     }
 }

@@ -1,19 +1,18 @@
 ﻿using Meadow.Foundation;
 
-namespace HalloweenEyeball
-{
-    public partial class EyeballController
-    {
-        public struct CoronaColor
-        {
-            public CoronaColor(Color dark, Color light)
-            {
-                CoronaDark = dark;
-                CoronaLight = light;
-            }
+namespace Eyeball.Core;
 
-            public Color CoronaDark { get; set; }
-            public Color CoronaLight { get; set; }
+public partial class EyeballController
+{
+    public struct CoronaColor
+    {
+        public CoronaColor(Color dark, Color light)
+        {
+            CoronaDark = dark;
+            CoronaLight = light;
         }
+
+        public Color CoronaDark { get; set; }
+        public Color CoronaLight { get; set; }
     }
 }

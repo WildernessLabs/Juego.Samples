@@ -1,27 +1,26 @@
-﻿namespace HalloweenEyeball
-{
-    public partial class EyeballController
-    {
-        public enum EyeColors
-        {
-            Red,
-            Green,
-            Blue,
-            Yellow,
-            Orange,
-            Count
-        }
+﻿namespace Eyeball.Core;
 
-        public enum EyeMovement
-        {
-            LookLeft,
-            LookRight,
-            LookUp,
-            LookDown,
-            Blink,
-            Dilate,
-            RetinaFade,
-            Count
-        }
+public partial class EyeballController
+{
+    public enum EyeColors
+    {
+        Red,
+        Green,
+        Blue,
+        Yellow,
+        Orange,
+        Count
+    }
+
+    public enum EyeMovement
+    {
+        LookLeft,
+        LookRight,
+        LookUp,
+        LookDown,
+        Blink,
+        Dilate,
+        RetinaFade,
+        Count
     }
 }
