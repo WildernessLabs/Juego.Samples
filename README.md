@@ -36,7 +36,7 @@ Before running any of the Juego samples below, make sure your board is running t
     <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-span-four.jpg" alt="dotnet, meadow, juego, graphics, 2D, span 4"/><br/>
-            Run/play a 2-player Span4 on a Juego</br>
+            Run/play a 2-player Span4</br>
             <a href="Source/Span4/">Source Code</a>
         </td>
         <td>
@@ -46,7 +46,7 @@ Before running any of the Juego samples below, make sure your board is running t
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg"/><br/>
-            Run/play classic snake on a Juego</br>
+            Run/play snake on a Juego</br>
             <a href="Source/Eyeball/">Source Code</a>
         </td> 
     </tr>
