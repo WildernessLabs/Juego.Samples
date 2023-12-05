@@ -7,7 +7,9 @@
 	<LangVersion>10.0</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Juego\Source\Juego\Juego.csproj" />
+    <PackageReference Include="Meadow.Juego" Version="*" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Eyeball.Core\Eyeball.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
