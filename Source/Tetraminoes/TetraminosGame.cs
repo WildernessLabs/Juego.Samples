@@ -1,4 +1,5 @@
 ﻿using Meadow;
+using Meadow.Foundation.Audio;
 using System;
 
 namespace Tetraminos
@@ -25,6 +26,7 @@ namespace Tetraminos
             Down,
             Left,
             Right,
+            Drop,
         }
 
         public Tetramino CurrentPiece { get; protected set; }
@@ -141,8 +143,10 @@ namespace Tetraminos
                     Roate();
                     break;
                 case UserInput.Down:
-                    Resolver.Log.Info("Down");
-                    Drop();
+                    MoveDown();
+                    break;
+                case UserInput.Drop:
+                    DropPiece();
                     break;
             }
 
@@ -170,6 +174,11 @@ namespace Tetraminos
             lastInput = UserInput.Right;
         }
 
+        public void Drop()
+        {
+            lastInput = UserInput.Drop;
+        }
+
         void MoveLeft()
         {
             if (IsPositionValid(CurrentPiece.X - 1,
@@ -178,6 +187,7 @@ namespace Tetraminos
                                Tetraminos[CurrentPiece.PieceType]) == true)
             {
                 CurrentPiece.X += -1;
+
             }
         }
 
@@ -203,13 +213,14 @@ namespace Tetraminos
                                 Tetraminos[CurrentPiece.PieceType]) == true)
             {
                 CurrentPiece.Rotate();
+                _ = moveAudio.PlayGameSound(GameSoundEffect.MenuNavigate);
             }
         }
 
-        void Drop()
+        void DropPiece()
         {
             while (MoveDown(false)) ;
-            // MoveDown(false);
+            _ = moveAudio.PlayGameSound(GameSoundEffect.MenuNavigate);
         }
 
         public bool MoveDown(bool setOnFail = false)
@@ -256,7 +267,7 @@ namespace Tetraminos
 
         void CheckForCompletedLines(int yPos)
         {
-            bool complete;
+            bool complete = false;
             for (int j = 0; j < 4; j++)
             {
                 complete = true;
@@ -272,6 +283,11 @@ namespace Tetraminos
                 {
                     ClearLine(j + yPos); //we're moving down so this is valid
                 }
+            }
+
+            if (complete)
+            {
+                _ = effectsAudio.PlayGameSound(GameSoundEffect.Victory);
             }
         }
 

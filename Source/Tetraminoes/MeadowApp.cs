@@ -36,13 +36,15 @@ namespace Tetramino
             game = new TetraminosGame();
 
             juego = Juego.Create();
+            juego.Left_UpButton.Clicked += (s, e) => game.Up();
             juego.Left_LeftButton.Clicked += (s, e) => game.Left();
             juego.Left_RightButton.Clicked += (s, e) => game.Right();
             juego.Left_DownButton.Clicked += (s, e) => game.Down();
 
+            juego.Right_UpButton.Clicked += (s, e) => game.Up();
             juego.Right_LeftButton.Clicked += (s, e) => game.Left();
             juego.Right_RightButton.Clicked += (s, e) => game.Right();
-            juego.Right_DownButton.Clicked += (s, e) => game.Down();
+            juego.Right_DownButton.Clicked += (s, e) => game.Drop();
 
             juego.StartButton.Clicked += StartButton_Clicked;
 
@@ -90,56 +92,15 @@ namespace Tetramino
 
         void UpdateGame()
         {
-            if (juego.Left_LeftButton.State == true)
-            {
-                game.Left();
-            }
-            else if (juego.Left_RightButton.State == true)
-            {
-                game.Right();
-            }
-            else if (juego.Left_UpButton.State == true)
-            {
-                game.Up();
-            }
-            else if (juego.Left_DownButton.State == true)
-            {
-                game.Down();
-            }
-            else if (juego.SelectButton.State == true)
-            {
-                //    game.Quit();
-            }
-
             game.Update();
         }
 
         void DrawplashScreen()
         {
             graphics.Clear();
-            graphics.DrawText(160, 70, "Tetraminos", Color.Cyan, ScaleFactor.X3, HorizontalAlignment.Center);
-            graphics.DrawText(160, 140, "Press Start", Color.LawnGreen, ScaleFactor.X1, HorizontalAlignment.Center);
+            graphics.DrawText(160, 70, "Tetraminos", Color.Cyan, ScaleFactor.X2, HorizontalAlignment.Center);
+            graphics.DrawText(160, 140, "Press Start", Color.Yellow, ScaleFactor.X1, HorizontalAlignment.Center);
             graphics.Show();
-        }
-
-        void DrawEndScreen()
-        {
-            /*
-            graphics.Clear();
-
-            if (game.Winner)
-            {
-                graphics.DrawText(160, 80, "You Win!", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-                graphics.DrawText(160, 140, $"Your time: {game.GameTime:F1}s", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
-                graphics.DrawText(160, 160, $"Your died: {game.Deaths} time(s)", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
-            }
-            else
-            {
-                graphics.DrawText(160, 80, "Game Over", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-            }
-
-            graphics.Show();
-            */
         }
 
         Task PlayGame()
@@ -152,8 +113,6 @@ namespace Tetramino
                     UpdateGame();
                     Thread.Sleep(0);
                 }
-                gameState = GameState.GameOver;
-                DrawEndScreen();
             }, TaskCreationOptions.LongRunning);
 
             t.Start();
