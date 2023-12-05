@@ -19,7 +19,7 @@ Before running any of the Juego samples below, make sure your board is running t
     <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-getting-started.jpg" alt="juego, dotnet, meadow, dice, buttons"/><br/>
-            Getting startd with Juego with and basic sample</br>
+            Getting startd with Juego</br>
             <a href="Source/">Source Code</a>
         </td>
         <td>
