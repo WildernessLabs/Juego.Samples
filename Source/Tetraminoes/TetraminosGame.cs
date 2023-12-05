@@ -39,12 +39,16 @@ namespace Tetraminos
 
         public byte[,] GameField { get; private set; }
 
-        Random rand;
+        readonly Random rand;
 
         UserInput lastInput = UserInput.None;
 
-        private byte[][] Tetraminos =
-        {
+        private readonly byte[][] Tetraminos =
+        {   //lazy blank piece hack
+            new byte[] { 0,0,0,0,
+                         0,0,0,0,
+                         0,0,0,0,
+                         0,0,0,0},
             new byte[] { 0,0,1,0,
                          0,1,1,0,
                          0,0,1,0,
@@ -105,7 +109,7 @@ namespace Tetraminos
 
         Tetramino GetNewPiece()
         {
-            byte index = (byte)rand.Next(6);
+            byte index = (byte)(rand.Next(6) + 1);
 
             return new Tetramino()
             {
@@ -218,7 +222,7 @@ namespace Tetraminos
             }
             else if (setOnFail)
             {
-                SetPieceToField();
+                SetPieceToField(CurrentPiece.PieceType);
                 CheckForCompletedLines(CurrentPiece.Y);
                 CurrentPiece = NextPiece;
                 NextPiece = GetNewPiece();
@@ -236,7 +240,7 @@ namespace Tetraminos
             return false; //for drop function ... should improve
         }
 
-        void SetPieceToField()
+        void SetPieceToField(byte pieceType)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -244,7 +248,7 @@ namespace Tetraminos
                 {
                     if (IsPieceLocationSet(i, j, CurrentPiece))
                     {
-                        GameField[CurrentPiece.X + i, CurrentPiece.Y + j] = 1;
+                        GameField[CurrentPiece.X + i, CurrentPiece.Y + j] = pieceType;
                     }
                 }
             }
@@ -320,6 +324,11 @@ namespace Tetraminos
             return true;
         }
 
+        public byte GetGameFieldValue(int x, int y)
+        {
+            return GameField[x, y];
+        }
+
         public bool IsGameFieldSet(int x, int y)
         {
             if (x < 0 || x >= Width || y < 0 || y >= Height)
@@ -344,15 +353,13 @@ namespace Tetraminos
                 return false;
             }
 
-            switch (rotation % 4)
+            return (rotation % 4) switch
             {
-                case 0: return pieceData[y * 4 + x] == 1;
-                case 1: return pieceData[12 + y - (x * 4)] == 1;
-                case 2: return pieceData[15 - (y * 4) - x] == 1;
-                case 3:
-                default:
-                    return pieceData[3 - y + (x * 4)] == 1;
-            }
+                0 => pieceData[y * 4 + x] == 1,
+                1 => pieceData[12 + y - (x * 4)] == 1,
+                2 => pieceData[15 - (y * 4) - x] == 1,
+                _ => pieceData[3 - y + (x * 4)] == 1,
+            };
         }
     }
 }

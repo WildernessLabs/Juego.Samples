@@ -1,4 +1,5 @@
-﻿using Meadow.Foundation.Audio;
+﻿using Meadow.Foundation;
+using Meadow.Foundation.Audio;
 using Meadow.Foundation.Graphics;
 using System;
 using System.Threading;
@@ -11,7 +12,7 @@ namespace Tetraminos
         MicroAudio effectsAudio;
         MicroGraphics graphics;
 
-        int blockSize = 1;
+        int blockSize;
         int topIndent;
         int leftIndent;
 
@@ -22,15 +23,14 @@ namespace Tetraminos
             this.graphics = graphics;
 
             graphics.Clear();
-            graphics.DrawText(0, 0, "Meadow Tetraminoes");
-            graphics.DrawText(0, 10, "v0.2.0");
+            graphics.DrawText(2, 0, "Meadow Tetraminoes");
+            graphics.DrawText(2, 20, "v0.3.0");
             graphics.Show();
 
-            leftIndent = 3;
+            leftIndent = 2;
+            topIndent = 2;
 
-            graphics.CurrentFont = new Font8x12();
-
-            topIndent = graphics.CurrentFont.Height + 2;
+            graphics.CurrentFont = new Font12x16();
 
             //little hacky but works out nicely for the low res displays
             blockSize = (graphics.Height - topIndent - 4) / 19;
@@ -59,7 +59,7 @@ namespace Tetraminos
                 {
                     if (IsPieceLocationSet(i, j, NextPiece))
                     {
-                        graphics.DrawRectangle(i * 2 + 54, j * 2, 2, 2);
+                        graphics.DrawRectangle(i * 8 + 160, 40 + j * 8, 8, 8);
                     }
                 }
             }
@@ -67,10 +67,10 @@ namespace Tetraminos
 
         void DrawGameField(MicroGraphics graphics)
         {
-            int xIndent = leftIndent + 2;
+            int xIndent = 3;
             int yIndent = topIndent + 2;
 
-            graphics.DrawText(xIndent, 0, $"Lines: {LinesCleared}");
+            graphics.DrawText(160, 0, $"Lines: {LinesCleared}");
 
             graphics.DrawRectangle(leftIndent,
                 topIndent,
@@ -84,10 +84,9 @@ namespace Tetraminos
                 {
                     if (IsPieceLocationSet(i, j, CurrentPiece))
                     {
-                        //  graphics.DrawPixel(i, j);
                         graphics.DrawRectangle((CurrentPiece.X + i) * blockSize + xIndent,
                             (CurrentPiece.Y + j) * blockSize + yIndent,
-                            blockSize, blockSize, true, true);
+                            blockSize, blockSize, GetColorForPiece(CurrentPiece.PieceType), true);
                     }
                 }
             }
@@ -101,10 +100,24 @@ namespace Tetraminos
                     {
                         graphics.DrawRectangle((i) * blockSize + xIndent,
                             (j) * blockSize + yIndent,
-                            blockSize, blockSize, true, true);
+                            blockSize, blockSize, GetColorForPiece(GetGameFieldValue(i, j)), true);
                     }
                 }
             }
+        }
+
+        Color GetColorForPiece(byte pieceType)
+        {
+            return pieceType switch
+            {
+                1 => Color.Blue,
+                2 => Color.Orange,
+                3 => Color.Yellow,
+                4 => Color.Green,
+                5 => Color.Purple,
+                6 => Color.Red,
+                _ => Color.White,
+            };
         }
     }
 }
