@@ -19,34 +19,34 @@ Before running any of the Juego samples below, make sure your board is running t
     <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-getting-started.jpg" alt="juego, dotnet, meadow, dice, buttons"/><br/>
-            Getting startd with Juego</br>
+            Getting started with Juego</br>
             <a href="Source/">Source Code</a>
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-froggit.jpg" alt="dotnet, meadow, juego, graphics, 2D, frogger"/><br/>
-            Run/play frogger on a Juego board</br>
+            Run/play frogger on a Juego</br>
             <a href="Source/Froggit/">Source Code</a>
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-tetraminos.jpg\"/><br/>
-            Run/play Tetraminoes on a Juego board<br/>
+            Run/play Tetraminoes on a Juego<br/>
             <a href="Source/Tetraminoes/">Source Code</a>
         </td>
     </tr>
     <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-span-four.jpg" alt="dotnet, meadow, juego, graphics, 2D, span 4"/><br/>
-            Run/play a 2-player Span4 on a Juego board</br>
+            Run/play a 2-player Span4 on a Juego</br>
             <a href="Source/Span4/">Source Code</a>
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-snake.jpg" alt="dotnet, meadow, juego, graphics, 2D, snake"/><br/>
-            Run/play snake on a Juego board</br>
+            Run/play snake on a Juego</br>
             <a href="Source/Snake/">Source Code</a>
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg"/><br/>
-            Run/play classic snake on a Juego board</br>
+            Run/play classic snake on a Juego</br>
             <a href="Source/Eyeball/">Source Code</a>
         </td> 
     </tr>
