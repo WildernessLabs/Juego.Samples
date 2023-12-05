@@ -2,7 +2,7 @@
 
 # Juego.Samples
 
-Samples for the Wilderness Labs Jeugo IoT Accelerator
+A collection of samples for the Wilderness Labs [Juego IoT Accelerator](https://github.com/WildernessLabs/Juego), an Open-source, Meadow-powered, multigame handheld console with DPads, speakers and a colored display.
 
 ## Contents
 * [Getting Started](#getting-started)
@@ -11,13 +11,12 @@ Samples for the Wilderness Labs Jeugo IoT Accelerator
 
 ## Getting Started
 
-Before running any of the project samples below, make sure to go through the [Meadow.Cloud basics](http://developer.wildernesslabs.co/Meadow/Meadow.OS/Updates/) guides showing you how to provision your device, how to download and apply an update from Meadow, and make/publish a package. 
+Before running any of the Juego samples below, make sure your board is running the latest OS version. We recomment going through our [Meadow OS Deployment](https://developer.wildernesslabs.co/Meadow/Getting_Started/Deploying_Meadow/) guide. 
 
 ## Project Samples
 
 <table>
-    </tr>
-        <tr>
+    <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-getting-started.jpg" alt="juego, dotnet, meadow, dice, buttons"/><br/>
             Getting startd with Juego with and basic sample</br>
@@ -37,7 +36,7 @@ Before running any of the project samples below, make sure to go through the [Me
     <tr>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-span-four.jpg" alt="dotnet, meadow, juego, graphics, 2D, span 4"/><br/>
-            Run/play Span4 on a Juego board</br>
+            Run/play a 2-player Span4 on a Juego board</br>
             <a href="Source/Span4/">Source Code</a>
         </td>
         <td>
@@ -47,7 +46,7 @@ Before running any of the project samples below, make sure to go through the [Me
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-eyeball.jpg"/><br/>
-            Run/play snake on a Juego board</br>
+            Run/play classic snake on a Juego board</br>
             <a href="Source/Eyeball/">Source Code</a>
         </td> 
     </tr>
