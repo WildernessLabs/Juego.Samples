@@ -1,42 +1,41 @@
-﻿using HalloweenEyeball;
+﻿using Eyeball.Core;
 using Meadow;
 using Meadow.Devices;
 using System;
 using System.Threading.Tasks;
 using WildernessLabs.Hardware.Juego;
 
-namespace JuegoEyeball
+namespace EyaballJuego;
+
+public class MeadowApp : App<F7CoreComputeV2>
 {
-    public class MeadowApp : App<F7CoreComputeV2>
+    IJuegoHardware juego;
+
+    EyeballController eyeballController;
+
+    public override Task Initialize()
     {
-        IJuegoHardware juego;
+        Console.WriteLine("Initialize...");
 
-        EyeballController eyeballController;
+        juego = Juego.Create();
 
-        public override Task Initialize()
+        eyeballController = new EyeballController(juego.Display);
+
+        return Task.CompletedTask;
+    }
+
+    public override Task Run()
+    {
+        Console.WriteLine("Run...");
+
+        eyeballController.DrawEyeball();
+
+        while (true)
         {
-            Console.WriteLine("Initialize...");
-
-            juego = Juego.Create();
-
-            eyeballController = new EyeballController(juego.Display);
-
-            return Task.CompletedTask;
-        }
-
-        public override Task Run()
-        {
-            Console.WriteLine("Run...");
-
-            eyeballController.DrawEyeball();
-
-            while (true)
-            {
-                eyeballController.Delay();
-                eyeballController.RandomEyeMovement();
-                eyeballController.Delay();
-                eyeballController.CenterEye();
-            }
+            eyeballController.Delay();
+            eyeballController.RandomEyeMovement();
+            eyeballController.Delay();
+            eyeballController.CenterEye();
         }
     }
 }
