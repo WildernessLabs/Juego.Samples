@@ -68,6 +68,12 @@
             return false;
         }
 
+        public void Start()
+        {
+            Reset();
+            UpdateScreen();
+        }
+
         public void Reset()
         {
             GameField = new byte[Width, Height];
@@ -93,6 +99,11 @@
 
             lastInput = UserInput.None;
 
+            UpdateScreen();
+        }
+
+        void UpdateScreen()
+        {
             graphics.Clear();
             DrawGame(graphics);
             graphics.Show();

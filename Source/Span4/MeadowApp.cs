@@ -18,15 +18,6 @@ namespace Span4
         MicroAudio moveAudio;
         MicroAudio effectsAudio;
 
-        GameState gameState = GameState.Ready;
-
-        enum GameState
-        {
-            Ready,
-            Playing,
-            GameOver
-        }
-
         public override Task Initialize()
         {
             Console.WriteLine("Initialize...");
@@ -42,7 +33,7 @@ namespace Span4
             juego.Right_RightButton.Clicked += (s, e) => game.Right();
             juego.Right_DownButton.Clicked += (s, e) => game.Down();
 
-            juego.StartButton.Clicked += (s, e) => game.Reset();
+            juego.StartButton.Clicked += (s, e) => game.Start();
 
             graphics = new MicroGraphics(juego.Display)
             {
@@ -70,79 +61,12 @@ namespace Span4
             return Task.CompletedTask;
         }
 
-        private void StartButton_Clicked(object sender, EventArgs e)
-        {
-            Console.WriteLine("StartButton_Clicked");
-
-            if (GameState.Ready == gameState)
-            {
-                gameState = GameState.Playing;
-                PlayGame();
-            }
-            else if (GameState.GameOver == gameState)
-            {
-                gameState = GameState.Ready;
-                DrawplashScreen();
-            }
-        }
-
-        void UpdateGame()
-        {
-            if (juego.Left_LeftButton.State == true)
-            {
-                game.Left();
-            }
-            else if (juego.Left_RightButton.State == true)
-            {
-                game.Right();
-            }
-            else if (juego.Left_UpButton.State == true)
-            {
-                game.Up();
-            }
-            else if (juego.Left_DownButton.State == true)
-            {
-                game.Down();
-            }
-            else if (juego.SelectButton.State == true)
-            {
-                //    game.Quit();
-            }
-
-            //   game.Update();
-        }
-
         void DrawplashScreen()
         {
             graphics.Clear();
             graphics.DrawText(160, 70, "Connect4", Color.Cyan, ScaleFactor.X3, HorizontalAlignment.Center);
             graphics.DrawText(160, 140, "Press Start", Color.Violet, ScaleFactor.X1, HorizontalAlignment.Center);
             graphics.Show();
-        }
-
-        void DrawEndScreen()
-        {
-            /*
-            graphics.Clear();
-
-            if (game.Winner)
-            {
-                graphics.DrawText(160, 80, "You Win!", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-                graphics.DrawText(160, 140, $"Your time: {game.GameTime:F1}s", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
-                graphics.DrawText(160, 160, $"Your died: {game.Deaths} time(s)", FrogItGame.WaterColor, ScaleFactor.X1, HorizontalAlignment.Center);
-            }
-            else
-            {
-                graphics.DrawText(160, 80, "Game Over", FrogItGame.FrogColor, ScaleFactor.X3, HorizontalAlignment.Center);
-            }
-
-            graphics.Show();
-            */
-        }
-
-        void PlayGame()
-        {
-            game.Reset();
         }
     }
 }
