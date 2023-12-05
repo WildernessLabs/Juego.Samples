@@ -6,7 +6,7 @@
     <AssemblyName>App</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Juego\Source\Juego\Juego.csproj" />
+    <PackageReference Include="Meadow.Juego" Version="1.5.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="meadow.config.yaml">

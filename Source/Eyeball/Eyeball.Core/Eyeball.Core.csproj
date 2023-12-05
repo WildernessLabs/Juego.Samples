@@ -8,6 +8,6 @@
 	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\Meadow.Foundation\Source\Meadow.Foundation.Libraries_and_Frameworks\Graphics.MicroGraphics\Driver\Graphics.MicroGraphics.csproj" />
+    <PackageReference Include="Meadow.Foundation.Graphics.MicroGraphics" Version="1.5.0" />
   </ItemGroup>
 </Project>
