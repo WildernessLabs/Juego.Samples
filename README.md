@@ -41,7 +41,7 @@ Before running any of the Juego samples below, make sure your board is running t
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-snake.jpg" alt="dotnet, meadow, juego, graphics, 2D, snake"/><br/>
-            Run/play a Halloween Eye Ball animation</br>
+            Halloween Eye Ball animation</br>
             <a href="Source/Snake/">Source Code</a>
         </td>
         <td>
