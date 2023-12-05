@@ -7,8 +7,6 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Juego\Source\Juego\Juego.csproj" />
-    <ProjectReference Include="..\..\..\Meadow.Core\source\implementations\f7\Meadow.F7\Meadow.F7.csproj" />
-    <ProjectReference Include="..\..\..\Meadow.Foundation\Source\Meadow.Foundation.Libraries_and_Frameworks\Audio.MicroAudio\Driver\Audio.MicroAudio.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Update="meadow.config.yaml">
