@@ -20,7 +20,7 @@ Before running any of the Juego samples below, make sure your board is running t
         <td>
             <img src="Design/wildernesslabs-meadow-juego-getting-started.jpg" alt="juego, dotnet, meadow, dice, buttons"/><br/>
             Getting started with Juego</br>
-            <a href="Source/">Source Code</a>
+            <a href="https://github.com/WildernessLabs/Juego/tree/main/Source/Juego_Demo">Source Code</a>
         </td>
         <td>
             <img src="Design/wildernesslabs-meadow-juego-froggit.jpg" alt="dotnet, meadow, juego, graphics, 2D, frogger"/><br/>
