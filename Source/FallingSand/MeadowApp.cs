@@ -22,9 +22,12 @@ namespace FallingSand
 
         readonly int SIZE = 4; //2;
 
-        readonly byte EMPTY = 0;
-        readonly byte SAND = 1;
-        readonly byte USED = 255;
+        const byte EMPTY = 0;
+        const byte SAND = 1;
+        const byte DIRT = 2;
+        const byte SNOW = 3;
+        const byte GRAVEL = 4;
+        const byte USED = 255;
 
         readonly byte[] board1 = new byte[NUM_COLUMNS * NUM_ROWS];
         readonly byte[] board2 = new byte[NUM_COLUMNS * NUM_ROWS];
@@ -65,10 +68,10 @@ namespace FallingSand
 
                 for (int i = 0; i < board1.Length; i++)
                 {
-                    if (bCurrent[i] != SAND) continue;
+                    if (IsParticle(bCurrent[i]) != true) continue;
 
                     index = GetNewIndexForSand(bCurrent, i, direction);
-                    bNext[index] = SAND;
+                    bNext[index] = bCurrent[i];
                     bCurrent[index] = USED;
                 }
 
@@ -89,20 +92,19 @@ namespace FallingSand
         void CheckButtonsAndAddSand()
         {
             if (juego.Left_UpButton.State == true)
-                AddSand(NUM_COLUMNS / 2, 0);
+                AddParticle(NUM_COLUMNS / 2, 0, SAND);
             if (juego.Left_DownButton.State == true)
-                AddSand(NUM_COLUMNS / 2, NUM_ROWS - 1);
+                AddParticle(NUM_COLUMNS / 2, NUM_ROWS - 1, SNOW);
             if (juego.Left_LeftButton.State == true)
-                AddSand(0, NUM_ROWS / 2);
+                AddParticle(0, NUM_ROWS / 2, GRAVEL);
             if (juego.Left_RightButton.State == true)
-                AddSand(NUM_COLUMNS - 1, NUM_ROWS / 2);
+                AddParticle(NUM_COLUMNS - 1, NUM_ROWS / 2, DIRT);
         }
 
         DigitalJoystickPosition GetPositionFromAccelerometer()
         {
             if (juego.MotionSensor.Acceleration3D == null)
             {
-                Console.WriteLine("No accelerometer data");
                 return DigitalJoystickPosition.Center;
             }
 
@@ -223,16 +225,21 @@ namespace FallingSand
             return false;
         }
 
+        bool IsParticle(byte value)
+        {
+            if (value == SAND || value == SNOW || value == DIRT || value == GRAVEL) return true;
+            return false;
+        }
+
         bool IsLeftEdge(int index) => index % NUM_COLUMNS == 0;
         bool IsRightEdge(int index) => index % NUM_COLUMNS == NUM_COLUMNS - 1;
         bool IsTopEdge(int index) => index / NUM_COLUMNS == 0;
         bool IsBottomEdge(int index) => index / NUM_COLUMNS == NUM_ROWS - 1;
 
-        public void AddSand(int x, int y)
+        public void AddParticle(int x, int y, byte value)
         {
-            Console.WriteLine($"Adding sand at {x}, {y} - {useBoard1}");
-            if (useBoard1) board1[x + y * NUM_COLUMNS] = SAND;
-            else board2[x + y * NUM_COLUMNS] = SAND;
+            if (useBoard1) board1[x + y * NUM_COLUMNS] = value;
+            else board2[x + y * NUM_COLUMNS] = value;
         }
 
         void ClearBoards()
@@ -244,14 +251,23 @@ namespace FallingSand
         {
             var board = useBoard1 ? board1 : board2;
 
+            Color particleColor;
+
             for (int i = 0; i < board1.Length; i++)
             {
-                if (board[i] == SAND)
+                if (IsParticle(board[i]) == true)
                 {
                     int x = i % NUM_COLUMNS;
                     int y = i / NUM_COLUMNS;
 
-                    graphics.DrawRectangle(x * SIZE, y * SIZE, SIZE, SIZE, Color.SandyBrown, true);
+                    particleColor = board[i] switch
+                    {
+                        SNOW => Color.White,
+                        DIRT => Color.SaddleBrown,
+                        GRAVEL => Color.Gray,
+                        _ => Color.SandyBrown,
+                    };
+                    graphics.DrawRectangle(x * SIZE, y * SIZE, SIZE, SIZE, particleColor, true);
                 }
             }
         }
