@@ -30,6 +30,8 @@ namespace FallingSand
         const byte GRAVEL = 4;
         const byte USED = 255;
 
+        readonly double ACCELEROMETER_SENSITIVITY = 0.4;
+
         //we use two boards, one to read current particle positions, one to write new positions
         readonly byte[] board1 = new byte[NUM_COLUMNS * NUM_ROWS];
         readonly byte[] board2 = new byte[NUM_COLUMNS * NUM_ROWS];
@@ -53,7 +55,7 @@ namespace FallingSand
 
             Console.WriteLine("Initialize complete");
 
-            return Task.CompletedTask;
+            return DrawSlashScreen();
         }
 
         public override Task Run()
@@ -95,16 +97,34 @@ namespace FallingSand
             }
         }
 
+        Task DrawSlashScreen()
+        {
+            graphics.CurrentFont = new Font8x12();
+            graphics.Clear();
+
+            graphics.DrawText(graphics.Width / 2, 50, "Falling Sand v1.0", Color.White, alignmentH: HorizontalAlignment.Center);
+
+            graphics.DrawText(graphics.Width / 2, 130, "Move Juego to change gravity", Color.White, alignmentH: HorizontalAlignment.Center);
+            graphics.DrawText(graphics.Width / 2, 100, "Press left buttons to add prticles", Color.White, alignmentH: HorizontalAlignment.Center);
+            graphics.DrawText(graphics.Width / 2, 160, "Press start to reset", Color.White, alignmentH: HorizontalAlignment.Center);
+
+            graphics.Show();
+
+            return Task.Delay(3000);
+        }
+
         void CheckButtonsAndAddParticle()
         {
+            if (juego.StartButton.State == true)
+                ClearBoards();
             if (juego.Left_UpButton.State == true)
                 AddParticle(NUM_COLUMNS / 2, 0, SAND);
             if (juego.Left_DownButton.State == true)
-                AddParticle(NUM_COLUMNS / 2, NUM_ROWS - 1, SNOW);
+                AddParticle(NUM_COLUMNS / 2, NUM_ROWS - 1, DIRT);
             if (juego.Left_LeftButton.State == true)
-                AddParticle(0, NUM_ROWS / 2, GRAVEL);
+                AddParticle(0, NUM_ROWS / 2, SNOW);
             if (juego.Left_RightButton.State == true)
-                AddParticle(NUM_COLUMNS - 1, NUM_ROWS / 2, DIRT);
+                AddParticle(NUM_COLUMNS - 1, NUM_ROWS / 2, GRAVEL);
         }
 
         DigitalJoystickPosition GetPositionFromAccelerometer()
@@ -116,29 +136,29 @@ namespace FallingSand
 
             var accel = juego.MotionSensor.Acceleration3D.Value;
 
-            if (accel.X.Gravity < -0.5)
+            if (accel.X.Gravity < 0 - ACCELEROMETER_SENSITIVITY)
             {
-                if (accel.Y.Gravity > 0.5)
+                if (accel.Y.Gravity > ACCELEROMETER_SENSITIVITY)
                     return DigitalJoystickPosition.UpLeft;
-                else if (accel.Y.Gravity < -0.5)
+                else if (accel.Y.Gravity < 0 - ACCELEROMETER_SENSITIVITY)
                     return DigitalJoystickPosition.DownLeft;
                 else
                     return DigitalJoystickPosition.Left;
             }
-            else if (accel.X.Gravity > 0.5)
+            else if (accel.X.Gravity > ACCELEROMETER_SENSITIVITY)
             {
-                if (accel.Y.Gravity > 0.5)
+                if (accel.Y.Gravity > ACCELEROMETER_SENSITIVITY)
                     return DigitalJoystickPosition.UpRight;
-                else if (accel.Y.Gravity < -0.5)
+                else if (accel.Y.Gravity < 0 - ACCELEROMETER_SENSITIVITY)
                     return DigitalJoystickPosition.DownRight;
                 else
                     return DigitalJoystickPosition.Right;
             }
-            else if (accel.Y.Gravity > 0.5)
+            else if (accel.Y.Gravity > ACCELEROMETER_SENSITIVITY)
             {
                 return DigitalJoystickPosition.Up;
             }
-            else if (accel.Y.Gravity < -0.5)
+            else if (accel.Y.Gravity < 0 - ACCELEROMETER_SENSITIVITY)
             {
                 return DigitalJoystickPosition.Down;
             }
