@@ -1,5 +1,6 @@
 ﻿using Meadow;
 using Meadow.Devices;
+using Meadow.Foundation;
 using Meadow.Foundation.Graphics;
 using Meadow.Peripherals.Sensors.Hid;
 using System;
@@ -288,10 +289,10 @@ namespace FallingSand
 
                     particleColor = board[i] switch
                     {
-                        SNOW => Color.White,
-                        DIRT => Color.SaddleBrown,
-                        GRAVEL => Color.Gray,
-                        _ => Color.SandyBrown,
+                        SNOW => WildernessLabsColors.GalleryWhite,
+                        DIRT => WildernessLabsColors.MetallicBronze,
+                        GRAVEL => WildernessLabsColors.DustyGray,
+                        _ => WildernessLabsColors.Sandrift,
                     };
                     graphics.DrawRectangle(x * PARTICLE_SIZE, y * PARTICLE_SIZE, PARTICLE_SIZE, PARTICLE_SIZE, particleColor, true);
                 }
