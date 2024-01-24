@@ -15,13 +15,14 @@ namespace FallingSand
         IJuegoHardware juego;
         MicroGraphics graphics;
 
-        readonly Random rand = new Random();
+        Random rand;
 
-        static readonly int NUM_COLUMNS = 80; //160;
-        static readonly int NUM_ROWS = 60; //120;
+        //adjust rows, columns, and size together to fit the screen
+        static readonly int NUM_COLUMNS = 80;
+        static readonly int NUM_ROWS = 60;
+        readonly int PARTICLE_SIZE = 4;
 
-        readonly int SIZE = 4; //2;
-
+        //values for particles used for color
         const byte EMPTY = 0;
         const byte SAND = 1;
         const byte DIRT = 2;
@@ -29,14 +30,18 @@ namespace FallingSand
         const byte GRAVEL = 4;
         const byte USED = 255;
 
+        //we use two boards, one to read current particle positions, one to write new positions
         readonly byte[] board1 = new byte[NUM_COLUMNS * NUM_ROWS];
         readonly byte[] board2 = new byte[NUM_COLUMNS * NUM_ROWS];
 
+        //we switch between the two boards each frame
         bool useBoard1 = true;
 
         public override Task Initialize()
         {
             Console.WriteLine("Initialize...");
+
+            rand = new Random();
 
             juego = Juego.Create();
 
@@ -54,15 +59,17 @@ namespace FallingSand
         public override Task Run()
         {
             graphics.Clear(true);
-            byte[] bCurrent, bNext;
+            byte[] bCurrent, bTarget;
             int index;
 
             while (true)
             {
+                //assign the current current and target boards
                 bCurrent = useBoard1 ? board1 : board2;
-                bNext = useBoard1 ? board2 : board1;
+                bTarget = useBoard1 ? board2 : board1;
 
-                Array.Clear(array: bNext, index: 0, length: bNext.Length);
+                //clear the target board
+                Array.Clear(array: bTarget, index: 0, length: bTarget.Length);
 
                 var direction = GetPositionFromAccelerometer();
 
@@ -70,26 +77,25 @@ namespace FallingSand
                 {
                     if (IsParticle(bCurrent[i]) != true) continue;
 
-                    index = GetNewIndexForSand(bCurrent, i, direction);
-                    bNext[index] = bCurrent[i];
+                    index = GetNewIndexForParticle(bCurrent, i, direction);
+                    bTarget[index] = bCurrent[i];
                     bCurrent[index] = USED;
                 }
 
+                //switch the boards
                 useBoard1 = !useBoard1;
 
-                CheckButtonsAndAddSand();
+                CheckButtonsAndAddParticle();
 
                 graphics.Clear();
-
                 DrawBoard();
-
                 graphics.Show();
 
                 Thread.Sleep(0);
             }
         }
 
-        void CheckButtonsAndAddSand()
+        void CheckButtonsAndAddParticle()
         {
             if (juego.Left_UpButton.State == true)
                 AddParticle(NUM_COLUMNS / 2, 0, SAND);
@@ -147,7 +153,7 @@ namespace FallingSand
             DigitalJoystickPosition directionAlt1,
             DigitalJoystickPosition directionAlt2)
         {
-            if (CanMoveSand(board, index, direction))
+            if (CanMoveParticle(board, index, direction))
             {
                 return GetRawIndexForDirection(index, direction);
             }
@@ -155,23 +161,23 @@ namespace FallingSand
             {
                 if (rand.Next(2) == 0)
                 {
-                    if (CanMoveSand(board, index, directionAlt1))
+                    if (CanMoveParticle(board, index, directionAlt1))
                         return GetRawIndexForDirection(index, directionAlt1);
-                    else if (CanMoveSand(board, index, directionAlt2))
+                    else if (CanMoveParticle(board, index, directionAlt2))
                         return GetRawIndexForDirection(index, directionAlt2);
                 }
                 else
                 {
-                    if (CanMoveSand(board, index, directionAlt2))
+                    if (CanMoveParticle(board, index, directionAlt2))
                         return GetRawIndexForDirection(index, directionAlt2);
-                    else if (CanMoveSand(board, index, directionAlt1))
+                    else if (CanMoveParticle(board, index, directionAlt1))
                         return GetRawIndexForDirection(index, directionAlt1);
                 }
             }
             return index;
         }
 
-        int GetNewIndexForSand(byte[] board, int index, DigitalJoystickPosition gravityDirection)
+        int GetNewIndexForParticle(byte[] board, int index, DigitalJoystickPosition gravityDirection)
         {
             return gravityDirection switch
             {
@@ -218,7 +224,7 @@ namespace FallingSand
             };
         }
 
-        bool CanMoveSand(byte[] board, int index, DigitalJoystickPosition position)
+        bool CanMoveParticle(byte[] board, int index, DigitalJoystickPosition position)
         {
             if (IsOnEdgeForDirection(index, position)) return false;
             if (board[GetRawIndexForDirection(index, position)] == EMPTY) return true;
@@ -267,7 +273,7 @@ namespace FallingSand
                         GRAVEL => Color.Gray,
                         _ => Color.SandyBrown,
                     };
-                    graphics.DrawRectangle(x * SIZE, y * SIZE, SIZE, SIZE, particleColor, true);
+                    graphics.DrawRectangle(x * PARTICLE_SIZE, y * PARTICLE_SIZE, PARTICLE_SIZE, PARTICLE_SIZE, particleColor, true);
                 }
             }
         }
