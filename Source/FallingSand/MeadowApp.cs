@@ -22,6 +22,10 @@ namespace FallingSand
 
         readonly int SIZE = 4; //2;
 
+        readonly byte EMPTY = 0;
+        readonly byte SAND = 1;
+        readonly byte USED = 255;
+
         readonly byte[] board1 = new byte[NUM_COLUMNS * NUM_ROWS];
         readonly byte[] board2 = new byte[NUM_COLUMNS * NUM_ROWS];
 
@@ -47,32 +51,30 @@ namespace FallingSand
         public override Task Run()
         {
             graphics.Clear(true);
-            byte[] b1, b2;
+            byte[] bCurrent, bNext;
             int index;
 
             while (true)
             {
-                b1 = useBoard1 ? board1 : board2;
-                b2 = useBoard1 ? board2 : board1;
+                bCurrent = useBoard1 ? board1 : board2;
+                bNext = useBoard1 ? board2 : board1;
+
+                Array.Clear(array: bNext, index: 0, length: bNext.Length);
+
                 var direction = GetPositionFromAccelerometer();
 
                 for (int i = 0; i < board1.Length; i++)
                 {
-                    if (b1[i] == 1)
-                    {
-                        index = GetNewIndexForSand(b1, i, direction);
-                        if (index != i)
-                        {
-                            b1[i] = 0;
-                            b2[i] = 0;
-                        }
-                        b2[index] = 1;
-                    }
+                    if (bCurrent[i] != SAND) continue;
+
+                    index = GetNewIndexForSand(bCurrent, i, direction);
+                    bNext[index] = SAND;
+                    bCurrent[index] = USED;
                 }
 
-                CheckButtonsAndAddSand();
-
                 useBoard1 = !useBoard1;
+
+                CheckButtonsAndAddSand();
 
                 graphics.Clear();
 
@@ -217,7 +219,7 @@ namespace FallingSand
         bool CanMoveSand(byte[] board, int index, DigitalJoystickPosition position)
         {
             if (IsOnEdgeForDirection(index, position)) return false;
-            if (board[GetRawIndexForDirection(index, position)] == 0) return true;
+            if (board[GetRawIndexForDirection(index, position)] == EMPTY) return true;
             return false;
         }
 
@@ -228,8 +230,9 @@ namespace FallingSand
 
         public void AddSand(int x, int y)
         {
-            if (useBoard1) board1[x + y * NUM_COLUMNS] = 1;
-            else board2[x + y * NUM_COLUMNS] = 1;
+            Console.WriteLine($"Adding sand at {x}, {y} - {useBoard1}");
+            if (useBoard1) board1[x + y * NUM_COLUMNS] = SAND;
+            else board2[x + y * NUM_COLUMNS] = SAND;
         }
 
         void ClearBoards()
@@ -243,7 +246,7 @@ namespace FallingSand
 
             for (int i = 0; i < board1.Length; i++)
             {
-                if (board[i] == 1)
+                if (board[i] == SAND)
                 {
                     int x = i % NUM_COLUMNS;
                     int y = i / NUM_COLUMNS;
