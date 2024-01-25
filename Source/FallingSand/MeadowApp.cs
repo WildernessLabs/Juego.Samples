@@ -63,7 +63,10 @@ namespace FallingSand
         {
             graphics.Clear(true);
             byte[] bCurrent, bTarget;
-            int index;
+            int sourceIndex;
+            int targetIndex;
+
+            bool iterateForwards = true;
 
             while (true)
             {
@@ -74,15 +77,26 @@ namespace FallingSand
                 //clear the target board
                 Array.Clear(array: bTarget, index: 0, length: bTarget.Length);
 
+                iterateForwards = false;
                 var direction = GetPositionFromAccelerometer();
+                if (direction == DigitalJoystickPosition.UpLeft ||
+                    direction == DigitalJoystickPosition.UpRight ||
+                    direction == DigitalJoystickPosition.Up ||
+                    direction == DigitalJoystickPosition.Left)
+                {
+                    iterateForwards = true;
+                }
 
                 for (int i = 0; i < board1.Length; i++)
                 {
-                    if (IsParticle(bCurrent[i]) != true) continue;
+                    sourceIndex = iterateForwards ? i : board1.Length - 1 - i;
 
-                    index = GetNewIndexForParticle(bCurrent, i, direction);
-                    bTarget[index] = bCurrent[i];
-                    bCurrent[index] = USED;
+                    if (IsParticle(bCurrent[sourceIndex]) != true) continue;
+
+                    targetIndex = GetNewIndexForParticle(bCurrent, sourceIndex, direction);
+                    bTarget[targetIndex] = bCurrent[sourceIndex];
+                    bCurrent[sourceIndex] = 0;
+                    bCurrent[targetIndex] = USED;
                 }
 
                 //switch the boards
@@ -265,8 +279,15 @@ namespace FallingSand
 
         public void AddParticle(int x, int y, byte value)
         {
-            if (useBoard1) board1[x + y * NUM_COLUMNS] = value;
-            else board2[x + y * NUM_COLUMNS] = value;
+            var board = useBoard1 ? board1 : board2;
+
+            //add jitter to the particle position
+            if (x == 0 || x == NUM_COLUMNS - 1)
+                y += rand.Next(-1, 2);
+            else
+                x += rand.Next(-1, 2);
+
+            board[x + y * NUM_COLUMNS] = value;
         }
 
         void ClearBoards()
