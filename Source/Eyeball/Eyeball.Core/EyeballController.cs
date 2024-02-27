@@ -1,6 +1,7 @@
 ﻿using Meadow;
 using Meadow.Foundation.Graphics;
 using Meadow.Foundation.Graphics.Buffers;
+using Meadow.Peripherals.Displays;
 using System;
 using System.Threading;
 
@@ -44,7 +45,7 @@ public partial class EyeballController
 
     readonly Random random = new();
 
-    public EyeballController(IGraphicsDisplay display)
+    public EyeballController(IPixelDisplay display)
     {
         graphics = new MicroGraphics(display);
         currentColor = CoronaColors[0];
